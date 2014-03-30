@@ -1,9 +1,11 @@
 package com.nfd.apps.twitterapp.adapters;
 
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
 import android.text.Html;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +42,11 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 		
 		TextView bodyView = (TextView) view.findViewById(R.id.tvBody);
 		bodyView.setText(Html.fromHtml(tweet.getBody()));
+		
+		TextView createDateView = (TextView) view.findViewById(R.id.tvCreateDate);
+		Date createDate = tweet.getCreationDate();
+		String str = DateUtils.getRelativeDateTimeString(this.getContext(), createDate.getTime(), DateUtils.MINUTE_IN_MILLIS, DateUtils.DAY_IN_MILLIS, 0).toString(); 
+		createDateView.setText(Html.fromHtml("<small><font color='#777777'>" + str + "<font color='#777777'>")); 
 		
 		return view;
 	}

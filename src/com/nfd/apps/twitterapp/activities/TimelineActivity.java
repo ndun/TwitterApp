@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -21,11 +20,14 @@ import com.nfd.apps.twitterapp.adapters.TweetsAdapter;
 import com.nfd.apps.twitterapp.helpers.EndlessScrollListener;
 import com.nfd.apps.twitterapp.models.Tweet;
 
+import eu.erikw.PullToRefreshListView;
+import eu.erikw.PullToRefreshListView.OnRefreshListener;
+
 public class TimelineActivity extends Activity {
 
 	public static final int COMPOSE_TWEET_REQUEST = 123;
 	
-	private ListView lvTweets;
+	private PullToRefreshListView lvTweets;
 	private TweetsAdapter tweetsAdapter;
 	private ArrayList<Tweet> tweets;
 	
@@ -33,9 +35,12 @@ public class TimelineActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
-		
-		lvTweets = (ListView) findViewById(R.id.lvTweets);
+		tweets = new ArrayList<Tweet>();
+		lvTweets = (PullToRefreshListView) findViewById(R.id.lvTweets);
+		tweetsAdapter = new TweetsAdapter(getBaseContext(), tweets);
+		lvTweets.setAdapter(tweetsAdapter);
 
+		/*
 		RequestParams parms = new RequestParams();
 		parms.put("count", "25");
 		
@@ -45,12 +50,12 @@ public class TimelineActivity extends Activity {
 					public void onSuccess(JSONArray jsonTweets) {
 						Log.d("TEST", jsonTweets.toString());
 						tweets = Tweet.fromJson(jsonTweets);
-
-						tweetsAdapter = new TweetsAdapter(getBaseContext(), tweets);
-						lvTweets.setAdapter(tweetsAdapter);
+						tweetsAdapter.clear();
+						tweetsAdapter.addAll(tweets);
 					}
 				}, parms);
-		
+		*/
+		fetchTimelineAsync(0);
 		setListViewListeners();
 	}
 
@@ -77,11 +82,24 @@ public class TimelineActivity extends Activity {
 	}
 	
 	private void setListViewListeners() {
-		lvTweets.setOnScrollListener(new EndlessScrollListener() {
-			
+		lvTweets.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list contents
+                // Make sure you call listView.onRefreshComplete()
+                // once the loading is done. This can be done from here or any
+                // place such as when the network request has completed successfully.
+                fetchTimelineAsync(0);
+            }
+        });
+		
+		lvTweets.setOnScrollListener(new EndlessScrollListener() {	
 			@Override
 			public void onLoadMore(int page, int totalItemsCount) {
 				// TODO Auto-generated method stub
+				if(tweetsAdapter.getCount() == 0) {
+					return;
+				}
 				Tweet aTweet = tweetsAdapter.getItem(tweetsAdapter.getCount()-1);
 				Log.d("TEST - last tweet", "last Tweet: " + aTweet.getBody() + " - count: " + tweetsAdapter.getCount() + " id: " + aTweet.getId());
 				String lastId = aTweet.getId();
@@ -101,6 +119,22 @@ public class TimelineActivity extends Activity {
 				}, parms);
 			}
 		});
+	}
+	
+	public void fetchTimelineAsync(int page) {
+		RequestParams parms = new RequestParams();
+		parms.put("count", "25");
+		
+		TwitterApp.getRestClient().getMoreTweets(
+				new JsonHttpResponseHandler() {
+					@Override
+					public void onSuccess(JSONArray jsonTweets) {
+						Log.d("TEST", jsonTweets.toString());
+						tweets = Tweet.fromJson(jsonTweets);
+						tweetsAdapter.clear();
+						tweetsAdapter.addAll(tweets);
+					}
+				}, parms);
 	}
 
 }

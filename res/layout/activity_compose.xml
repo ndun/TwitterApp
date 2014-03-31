@@ -1,0 +1,36 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ComposeActivity" >
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:onClick="cancelTweet"
+        android:text="@string/cancel_button_label" />
+
+    <Button
+        android:id="@+id/btnTweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="createTweet"
+        android:text="@string/tweet_button_label" />
+
+    <EditText
+        android:id="@+id/etTweetBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnCancel"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/btnCancel"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textMultiLine" />
+
+</RelativeLayout>

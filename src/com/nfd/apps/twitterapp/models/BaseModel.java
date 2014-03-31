@@ -1,8 +1,13 @@
 package com.nfd.apps.twitterapp.models;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
-public class BaseModel {
+public class BaseModel implements Serializable {
+
+	private static final long serialVersionUID = 6540675926041277941L;
+
 	protected JSONObject jsonObject;
 
 	public String getJSONString() {

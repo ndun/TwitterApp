@@ -47,6 +47,10 @@
             android:name="com.nfd.apps.twitterapp.activities.TimelineActivity"
             android:label="@string/title_activity_timeline" >
         </activity>
+        <activity
+            android:name="com.nfd.apps.twitterapp.activities.ComposeActivity"
+            android:label="@string/title_activity_compose" >
+        </activity>
     </application>
 
 </manifest>

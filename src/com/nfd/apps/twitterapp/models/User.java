@@ -5,7 +5,10 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User implements Serializable { //extends BaseModel {
+public class User implements Serializable { 
+
+	private static final long serialVersionUID = 3811867177527781150L;
+
 	private static final String NAME_KEY = "name";
 	private static final String ID_KEY = "id";
 	private static final String SCREEN_NAME_KEY = "screen_name";
@@ -39,34 +42,18 @@ public class User implements Serializable { //extends BaseModel {
 	}
 	
 	public String getName() {
-//		return getString(NAME_KEY);
 		return name;
 	}
 	
 	public long getId() {
-//		return getLong(ID_KEY);
 		return id;
 	}
 	
 	public String getProfileImageUrl() {
-//		return getString(PROFILE_IMG_URL_KEY);
 		return profileImageUrl;
 	}
 	
 	public String getScreenName() {
-//		return getString(SCREEN_NAME_KEY);
 		return screenName;
 	}
-
-/*	
-	public static User fromJson(JSONObject json) {
-		User u = new User();
-		try {
-			u.jsonObject = json;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return u;
-	}
-	*/
 }

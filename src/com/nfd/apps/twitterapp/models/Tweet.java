@@ -24,8 +24,6 @@ public class Tweet implements Serializable {
 
 	private static final String CREATE_DATE_FORMAT = "EEE MMM d HH:mm:ss z yyyy";
 
-	// protected JSONObject jsonObject;
-
 	private String body;
 	private String id;
 	private Date creationDate;
@@ -63,37 +61,16 @@ public class Tweet implements Serializable {
 	}
 
 	public String getBody() {
-		// return getString(TEXT_KEY);
 		return body;
 	}
 
 	public String getId() {
-//		return getString(ID_KEY);
 		return id;
 	}
 
 	public Date getCreationDate() {
 		return creationDate;
-/*
-		String dateStr = getString(CREATION_DATE_KEY);
-		SimpleDateFormat sdf = new SimpleDateFormat(CREATE_DATE_FORMAT);
-		sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-		try {
-			return sdf.parse(dateStr);
-		} catch (ParseException pe) {
-			pe.printStackTrace();
-		}
-		return null;
-		*/
 	}
-
-	/*
-	 * public static Tweet fromJson(JSONObject jsonObject) { Tweet tweet = new
-	 * Tweet(jsonObject); try { // tweet.jsonObject = jsonObject;
-	 * tweet.getString(TEXT_KEY); tweet.user =
-	 * User.fromJson(jsonObject.getJSONObject(USER_KEY)); } catch (JSONException
-	 * e) { e.printStackTrace(); return null; } return tweet; }
-	 */
 
 	public static ArrayList<Tweet> fromJson(JSONArray jsonArray) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>(jsonArray.length());
@@ -106,7 +83,7 @@ public class Tweet implements Serializable {
 				continue;
 			}
 
-			Tweet tweet = new Tweet(tweetJson);// Tweet.fromJson(tweetJson);
+			Tweet tweet = new Tweet(tweetJson);
 			if (tweet != null) {
 				tweets.add(tweet);
 			}
@@ -114,27 +91,4 @@ public class Tweet implements Serializable {
 
 		return tweets;
 	}
-
-	/*
-	 * public String getJSONString() { return jsonObject.toString(); }
-	 * 
-	 * protected String getString(String name) { try { return
-	 * jsonObject.getString(name); } catch (Exception e) { e.printStackTrace();
-	 * return null; } }
-	 * 
-	 * protected long getLong(String name) { try { return
-	 * jsonObject.getLong(name); } catch (Exception e) { e.printStackTrace();
-	 * return 0; } }
-	 * 
-	 * protected int getInt(String name) { try { return jsonObject.getInt(name);
-	 * } catch (Exception e) { e.printStackTrace(); return 0; } }
-	 * 
-	 * protected double getDouble(String name) { try { return
-	 * jsonObject.getDouble(name); } catch (Exception e) { e.printStackTrace();
-	 * return 0; } }
-	 * 
-	 * protected boolean getBoolean(String name) { try { return
-	 * jsonObject.getBoolean(name); } catch (Exception e) { e.printStackTrace();
-	 * return false; } }
-	 */
 }

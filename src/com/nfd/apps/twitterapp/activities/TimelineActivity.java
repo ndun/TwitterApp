@@ -90,6 +90,7 @@ public class TimelineActivity extends Activity {
                 // once the loading is done. This can be done from here or any
                 // place such as when the network request has completed successfully.
                 fetchTimelineAsync(0);
+                lvTweets.onRefreshComplete();
             }
         });
 		

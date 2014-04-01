@@ -25,20 +25,21 @@ public class Tweet implements Serializable {
 	private static final String CREATE_DATE_FORMAT = "EEE MMM d HH:mm:ss z yyyy";
 
 	private String body;
-	private String id;
+	private long id;
 	private Date creationDate;
 
 	private User user;
 
 	public Tweet() {
-		body = id = "";
+		body = "";
+		id = 0;
 		creationDate = null;
 	}
 
 	public Tweet(JSONObject jsonObj) {
 		try {
 			body = jsonObj.getString(TEXT_KEY);
-			id = jsonObj.getString(ID_KEY);			
+			id = jsonObj.getLong(ID_KEY);			
 			user = new User(jsonObj.getJSONObject(USER_KEY));
 			
 			String dateStr = jsonObj.getString(CREATION_DATE_KEY);
@@ -47,11 +48,13 @@ public class Tweet implements Serializable {
 			creationDate = sdf.parse(dateStr);
 		} catch (ParseException pe) {
 			pe.printStackTrace();
-			body = id = "";
+			body = "";
+			id=0;
 			creationDate = null;
 		} catch (JSONException e) {
 			e.printStackTrace();
-			body = id = "";
+			body = "";
+			id = 0;
 			creationDate = null;
 		}
 	}
@@ -64,7 +67,7 @@ public class Tweet implements Serializable {
 		return body;
 	}
 
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 

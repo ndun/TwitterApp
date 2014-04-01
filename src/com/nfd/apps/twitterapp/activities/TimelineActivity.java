@@ -1,9 +1,9 @@
 package com.nfd.apps.twitterapp.activities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -26,6 +29,7 @@ import eu.erikw.PullToRefreshListView.OnRefreshListener;
 public class TimelineActivity extends Activity {
 
 	public static final int COMPOSE_TWEET_REQUEST = 123;
+	public static final String TWEET_EXTRA = "tweet";
 	
 	private PullToRefreshListView lvTweets;
 	private TweetsAdapter tweetsAdapter;
@@ -71,10 +75,6 @@ public class TimelineActivity extends Activity {
 		lvTweets.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                // Your code to refresh the list contents
-                // Make sure you call listView.onRefreshComplete()
-                // once the loading is done. This can be done from here or any
-                // place such as when the network request has completed successfully.
             	shouldClearTweets = true;
                 fetchTimelineAsync(new RequestParams());
                 lvTweets.onRefreshComplete();
@@ -84,20 +84,33 @@ public class TimelineActivity extends Activity {
 		lvTweets.setOnScrollListener(new EndlessScrollListener() {	
 			@Override
 			public void onLoadMore(int page, int totalItemsCount) {
-				// TODO Auto-generated method stub
+
 				if(tweetsAdapter.getCount() == 0) {
 					return;
 				}
 				Tweet aTweet = tweetsAdapter.getItem(tweetsAdapter.getCount()-1);
 				Log.d("TEST - last tweet", "last Tweet: " + aTweet.getBody() + " - count: " + tweetsAdapter.getCount() + " id: " + aTweet.getId());
-				String lastId = aTweet.getId();
+				long lastId = aTweet.getId();
+				lastId = lastId - 1;
 				shouldClearTweets = false;
+				
 				RequestParams parms = new RequestParams();
-				parms.put("max_id", lastId);
+				parms.put("max_id", String.valueOf(lastId));
 				fetchTimelineAsync(parms);
 			}
 		});
 	
+		lvTweets.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+				Log.d("TEST - Item Click Listener", "on item click: " + pos);
+				Intent i = new Intent();
+				i.putExtra(TWEET_EXTRA, tweetsAdapter.getItem(pos));
+				i.setClass(getBaseContext(), TweetDisplayActivity.class);
+				startActivity(i);
+			}
+		});
 	}
 	
 	public void fetchTimelineAsync(RequestParams parms) {
@@ -115,6 +128,15 @@ public class TimelineActivity extends Activity {
 						}
 						tweetsAdapter.addAll(tweets);
 					}
+
+					@Override
+					public void onFailure(Throwable arg0, JSONObject arg1) {
+						// TODO Auto-generated method stub
+						Log.d("test - failure", arg0.toString());
+//						super.onFailure(arg0, arg1);
+					}
+					
+					
 				}, parms);
 	}
 

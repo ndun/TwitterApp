@@ -51,6 +51,10 @@
             android:name="com.nfd.apps.twitterapp.activities.ComposeActivity"
             android:label="@string/title_activity_compose" >
         </activity>
+        <activity
+            android:name="com.nfd.apps.twitterapp.activities.TweetDisplayActivity"
+            android:label="@string/title_activity_tweet_display" >
+        </activity>
     </application>
 
 </manifest>

@@ -30,6 +30,7 @@ public class TimelineActivity extends Activity {
 	private PullToRefreshListView lvTweets;
 	private TweetsAdapter tweetsAdapter;
 	private ArrayList<Tweet> tweets;
+	private boolean shouldClearTweets = true;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,22 +41,7 @@ public class TimelineActivity extends Activity {
 		tweetsAdapter = new TweetsAdapter(getBaseContext(), tweets);
 		lvTweets.setAdapter(tweetsAdapter);
 
-		/*
-		RequestParams parms = new RequestParams();
-		parms.put("count", "25");
-		
-		TwitterApp.getRestClient().getMoreTweets(
-				new JsonHttpResponseHandler() {
-					@Override
-					public void onSuccess(JSONArray jsonTweets) {
-						Log.d("TEST", jsonTweets.toString());
-						tweets = Tweet.fromJson(jsonTweets);
-						tweetsAdapter.clear();
-						tweetsAdapter.addAll(tweets);
-					}
-				}, parms);
-		*/
-		fetchTimelineAsync(0);
+		fetchTimelineAsync(new RequestParams());
 		setListViewListeners();
 	}
 
@@ -89,7 +75,8 @@ public class TimelineActivity extends Activity {
                 // Make sure you call listView.onRefreshComplete()
                 // once the loading is done. This can be done from here or any
                 // place such as when the network request has completed successfully.
-                fetchTimelineAsync(0);
+            	shouldClearTweets = true;
+                fetchTimelineAsync(new RequestParams());
                 lvTweets.onRefreshComplete();
             }
         });
@@ -104,35 +91,28 @@ public class TimelineActivity extends Activity {
 				Tweet aTweet = tweetsAdapter.getItem(tweetsAdapter.getCount()-1);
 				Log.d("TEST - last tweet", "last Tweet: " + aTweet.getBody() + " - count: " + tweetsAdapter.getCount() + " id: " + aTweet.getId());
 				String lastId = aTweet.getId();
+				shouldClearTweets = false;
 				RequestParams parms = new RequestParams();
 				parms.put("max_id", lastId);
-				
-
-				TwitterApp.getRestClient().getMoreTweets(new JsonHttpResponseHandler() {
-					@Override
-					public void onSuccess(JSONArray jsonTweets) {
-						Log.d("TEST", jsonTweets.toString());
-						
-						List<Tweet> newTweets = Tweet.fromJson(jsonTweets);
-						tweetsAdapter.addAll(newTweets);
-
-					}
-				}, parms);
+				fetchTimelineAsync(parms);
 			}
 		});
+	
 	}
 	
-	public void fetchTimelineAsync(int page) {
-		RequestParams parms = new RequestParams();
+	public void fetchTimelineAsync(RequestParams parms) {
+//		RequestParams parms = new RequestParams();
 		parms.put("count", "25");
 		
-		TwitterApp.getRestClient().getMoreTweets(
+		TwitterApp.getRestClient().getHomeTimeline(
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
 						Log.d("TEST", jsonTweets.toString());
 						tweets = Tweet.fromJson(jsonTweets);
-						tweetsAdapter.clear();
+						if(shouldClearTweets) {
+							tweetsAdapter.clear();
+						}
 						tweetsAdapter.addAll(tweets);
 					}
 				}, parms);

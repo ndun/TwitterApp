@@ -130,8 +130,6 @@ public class ComposeActivity extends Activity {
 			}
 
 		}, params);
-		// Intent i = new Intent(this, TimelineActivity.class);
-		// startActivity(i);
 	}
 
 }

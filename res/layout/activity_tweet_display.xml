@@ -8,10 +8,57 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TweetDisplayActivity" >
 
-    <TextView
-        android:id="@+id/tvTweetHtml"
+    <ImageView
+        android:id="@+id/ivProfilePic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+         />
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivProfilePic"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/ivProfilePic"
+        android:text="Name" />
+
+    <TextView
+        android:id="@+id/tvTwitterHandle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/ivProfilePic"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/ivProfilePic"
+        android:text="Handle" />
+
+    <TextView
+        android:id="@+id/tvTweetBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivProfilePic"
+        android:layout_marginTop="10dp"
+        
         android:text="@string/hello_world" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvTweetBody"
+        android:layout_marginBottom="5dp"
+        android:text="Date"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <View
+        android:id="@+id/vwSeparator"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tvDate"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/darker_gray" />
 
 </RelativeLayout>

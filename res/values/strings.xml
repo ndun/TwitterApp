@@ -8,7 +8,7 @@
     <string name="login_label">Log in</string>
     <string name="title_activity_timeline">TimelineActivity</string>
     <string name="compose_tweet_title">Compose Tweet</string>
-    <string name="title_activity_compose">ComposeActivity</string>
+    <string name="title_activity_compose">Compose Tweet</string>
     <string name="cancel_button_label">Cancel</string>
     <string name="tweet_button_label">Tweet</string>
     <string name="title_activity_tweet_display">TweetDisplayActivity</string>

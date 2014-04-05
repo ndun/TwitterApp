@@ -2,31 +2,26 @@ package com.nfd.apps.twitterapp.activities;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import android.app.Activity;
+import android.app.ActionBar;
+import android.app.ActionBar.Tab;
+import android.app.ActionBar.TabListener;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.nfd.apps.twitterapp.R;
-import com.nfd.apps.twitterapp.TwitterApp;
 import com.nfd.apps.twitterapp.adapters.TweetsAdapter;
-import com.nfd.apps.twitterapp.helpers.EndlessScrollListener;
+import com.nfd.apps.twitterapp.fragments.HomeTimelineFragment;
+import com.nfd.apps.twitterapp.fragments.MentionsFragment;
 import com.nfd.apps.twitterapp.models.Tweet;
 
 import eu.erikw.PullToRefreshListView;
-import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
-public class TimelineActivity extends Activity {
+public class TimelineActivity extends FragmentActivity implements TabListener{
 
 	public static final int COMPOSE_TWEET_REQUEST = 123;
 	public static final String TWEET_EXTRA = "tweet";
@@ -40,13 +35,25 @@ public class TimelineActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
-		tweets = new ArrayList<Tweet>();
-		lvTweets = (PullToRefreshListView) findViewById(R.id.lvTweets);
-		tweetsAdapter = new TweetsAdapter(getBaseContext(), tweets);
-		lvTweets.setAdapter(tweetsAdapter);
+		setupNavigationTabs();
+//		TweetsListFragment fragmentTweets = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentTweets);
 
-		fetchTimelineAsync(new RequestParams());
-		setListViewListeners();
+
+
+//		fetchTimelineAsync(new RequestParams());
+//		setListViewListeners();
+		
+	}
+
+	private void setupNavigationTabs() {
+		ActionBar actionBar = this.getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setDisplayShowTitleEnabled(false);
+		Tab tabHome = actionBar.newTab().setText("Home").setTag("HomeTimeLineFragment").setTabListener(this);
+		Tab mentions = actionBar.newTab().setText("Mentions").setTag("MentionsFragment").setTabListener(this);
+		actionBar.addTab(tabHome);
+		actionBar.addTab(mentions);
+		actionBar.selectTab(tabHome);
 	}
 
 	@Override
@@ -70,74 +77,30 @@ public class TimelineActivity extends Activity {
 			}
 		}
 	}
-	
-	private void setListViewListeners() {
-		lvTweets.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-            	shouldClearTweets = true;
-                fetchTimelineAsync(new RequestParams());
-                lvTweets.onRefreshComplete();
-            }
-        });
+
+	@Override
+	public void onTabReselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
 		
-		lvTweets.setOnScrollListener(new EndlessScrollListener() {	
-			@Override
-			public void onLoadMore(int page, int totalItemsCount) {
-
-				if(tweetsAdapter.getCount() == 0) {
-					return;
-				}
-				Tweet aTweet = tweetsAdapter.getItem(tweetsAdapter.getCount()-1);
-				Log.d("TEST - last tweet", "last Tweet: " + aTweet.getBody() + " - count: " + tweetsAdapter.getCount() + " id: " + aTweet.getId());
-				long lastId = aTweet.getId();
-				lastId = lastId - 1;
-				shouldClearTweets = false;
-				
-				RequestParams parms = new RequestParams();
-				parms.put("max_id", String.valueOf(lastId));
-				fetchTimelineAsync(parms);
-			}
-		});
-	
-		lvTweets.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
-				Log.d("TEST - Item Click Listener", "on item click: " + pos);
-				Intent i = new Intent();
-				i.putExtra(TWEET_EXTRA, tweetsAdapter.getItem(pos));
-				i.setClass(getBaseContext(), TweetDisplayActivity.class);
-				startActivity(i);
-			}
-		});
 	}
-	
-	public void fetchTimelineAsync(RequestParams parms) {
-//		RequestParams parms = new RequestParams();
-		parms.put("count", "25");
+
+	@Override
+	public void onTabSelected(Tab tab, FragmentTransaction ft) {
+		FragmentManager manager = getSupportFragmentManager();
+		android.support.v4.app.FragmentTransaction fts = manager.beginTransaction();
+		if(tab.getTag().equals("HomeTimeLineFragment")) {
+			fts.replace(R.id.frame_container, new HomeTimelineFragment());
+		} else {
+			fts.replace(R.id.frame_container, new MentionsFragment());
+		}
+		fts.commit();
+	}
+
+	@Override
+	public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+		// TODO Auto-generated method stub
 		
-		TwitterApp.getRestClient().getHomeTimeline(
-				new JsonHttpResponseHandler() {
-					@Override
-					public void onSuccess(JSONArray jsonTweets) {
-						Log.d("TEST", jsonTweets.toString());
-						tweets = Tweet.fromJson(jsonTweets);
-						if(shouldClearTweets) {
-							tweetsAdapter.clear();
-						}
-						tweetsAdapter.addAll(tweets);
-					}
-
-					@Override
-					public void onFailure(Throwable arg0, JSONObject arg1) {
-						// TODO Auto-generated method stub
-						Log.d("test - failure", arg0.toString());
-//						super.onFailure(arg0, arg1);
-					}
-					
-					
-				}, parms);
 	}
+		
 
 }

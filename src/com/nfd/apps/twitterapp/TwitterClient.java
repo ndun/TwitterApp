@@ -43,8 +43,8 @@ public class TwitterClient extends OAuthBaseClient {
     	client.get(apiUrl, params, handler);
     }
     
-    public void getEmbeddedTweet(AsyncHttpResponseHandler handler, RequestParams params) {
-    	String apiUrl = getApiUrl("statuses/oembed.json");
+    public void getMentions(AsyncHttpResponseHandler handler, RequestParams params) {
+    	String apiUrl = getApiUrl("statuses/mentions_timeline.json");
     	client.get(apiUrl, params, handler);
     }
     

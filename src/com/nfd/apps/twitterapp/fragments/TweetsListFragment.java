@@ -2,6 +2,9 @@ package com.nfd.apps.twitterapp.fragments;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,8 +15,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.nfd.apps.twitterapp.R;
+import com.nfd.apps.twitterapp.TwitterApp;
 import com.nfd.apps.twitterapp.activities.TweetDisplayActivity;
 import com.nfd.apps.twitterapp.adapters.TweetsAdapter;
 import com.nfd.apps.twitterapp.helpers.EndlessScrollListener;
@@ -82,4 +87,6 @@ public class TweetsListFragment extends Fragment {
 			}
 		});
 	}
+	
+	
 }

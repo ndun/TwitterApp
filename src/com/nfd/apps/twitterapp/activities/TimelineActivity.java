@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.nfd.apps.twitterapp.ProfileActivity;
 import com.nfd.apps.twitterapp.R;
 import com.nfd.apps.twitterapp.adapters.TweetsAdapter;
 import com.nfd.apps.twitterapp.fragments.HomeTimelineFragment;
@@ -43,6 +44,11 @@ public class TimelineActivity extends FragmentActivity implements TabListener{
 //		fetchTimelineAsync(new RequestParams());
 //		setListViewListeners();
 		
+	}
+	
+	public void onProfileView(MenuItem mi) {
+		Intent i = new Intent(this, ProfileActivity.class);
+		startActivity(i);
 	}
 
 	private void setupNavigationTabs() {

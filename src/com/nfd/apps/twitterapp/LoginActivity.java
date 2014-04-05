@@ -1,12 +1,19 @@
 package com.nfd.apps.twitterapp;
 
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.View;
 
+import com.activeandroid.util.Log;
 import com.codepath.oauth.OAuthLoginActivity;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nfd.apps.twitterapp.activities.TimelineActivity;
+import com.nfd.apps.twitterapp.models.User;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 
 
@@ -29,6 +36,7 @@ public class LoginActivity extends OAuthLoginActivity<TwitterClient> {
 	// i.e Display application "homepage"
     @Override
     public void onLoginSuccess() {
+    	populateUserInfo();
     	Intent i = new Intent(this, TimelineActivity.class);
     	startActivity(i);
     }
@@ -46,5 +54,18 @@ public class LoginActivity extends OAuthLoginActivity<TwitterClient> {
     public void loginToRest(View view) {
         getClient().connect();
     }
+    
+	private void populateUserInfo() {
+		TwitterApp.getRestClient().getUser(new JsonHttpResponseHandler() {
+
+			@Override
+			public void onSuccess(JSONObject json) {
+				Log.d("test - get user", json.toString());
+				User user = new User(json);
+				TwitterApp.setUser(user);
+
+			}
+		});
+	}
 
 }

@@ -76,8 +76,14 @@ public class ComposeActivity extends Activity {
 	}
 
 	private void populateUserInfo() {
-		TwitterApp.getRestClient().getUser(new JsonHttpResponseHandler() {
-
+		
+		User user = TwitterApp.getUser();
+		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(), ivProfilePic);
+		String formattedName = "<b>" + user.getName() + "</b> <small><font color='#777777'>@"
+				+ user.getScreenName() + "</font></small>";
+		tvUserName.setText(Html.fromHtml(formattedName));
+//		TwitterApp.getRestClient().getUser(new JsonHttpResponseHandler() {
+/*
 			@Override
 			public void onSuccess(JSONObject json) {
 				Log.d("test - get user", json.toString());
@@ -98,6 +104,7 @@ public class ComposeActivity extends Activity {
 			}
 
 		});
+		*/
 	}
 
 	@Override

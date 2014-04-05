@@ -2,6 +2,7 @@ package com.nfd.apps.twitterapp;
 
 import android.content.Context;
 
+import com.nfd.apps.twitterapp.models.User;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -17,6 +18,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
  */
 public class TwitterApp extends com.activeandroid.app.Application {
 	private static Context context;
+	private static User user;
+	
 	
     @Override
     public void onCreate() {
@@ -34,5 +37,13 @@ public class TwitterApp extends com.activeandroid.app.Application {
     
     public static TwitterClient getRestClient() {
     	return (TwitterClient) TwitterClient.getInstance(TwitterClient.class, TwitterApp.context);
+    }
+    
+    public static User getUser() {
+    	return user;
+    }
+    
+    public static void setUser(User u) {
+    	user = u;
     }
 }

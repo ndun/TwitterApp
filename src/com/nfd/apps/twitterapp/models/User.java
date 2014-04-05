@@ -17,11 +17,15 @@ public class User implements Serializable {
 	private static final String NUM_TWEETS_KEY = "statuses_count";
 	private static final String FOLLOWERS_COUNT_KEY = "followers_count";
 	private static final String FRIENDS_COUNT_KEY = "friends_count";
+	private static final String DESCRIPTION_KEY = "description";
 	
 	private String name;
 	private String profileImageUrl;
 	private String screenName;
+	private String tagline;
 	private long id;
+	private long followersCount;
+	private long friendsCount;
 	
 	public User() {
 		name = profileImageUrl = screenName = "";
@@ -34,15 +38,30 @@ public class User implements Serializable {
 			id = json.getLong(ID_KEY);
 			profileImageUrl = json.getString(PROFILE_IMG_URL_KEY);
 			screenName = json.getString(SCREEN_NAME_KEY);
+			followersCount = json.getLong(FOLLOWERS_COUNT_KEY);
+			friendsCount = json.getLong(FRIENDS_COUNT_KEY);
+			tagline = json.getString(DESCRIPTION_KEY);
 		} catch(JSONException e) {
 			e.printStackTrace();
 			name = profileImageUrl = screenName = "";
 			id = 0;
 		}
 	}
-	
+
 	public String getName() {
 		return name;
+	}
+	
+	public String getTagline() {
+		return tagline;
+	}
+
+	public long getFollowersCount() {
+		return followersCount;
+	}
+	
+	public long getFriendsCount() {
+		return friendsCount;
 	}
 	
 	public long getId() {

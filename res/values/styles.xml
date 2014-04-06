@@ -15,6 +15,15 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        
+    </style>
+    
+        <style name="Theme.TwitterCopy" parent="@android:style/Theme.Holo.Light">
+       <item name="android:actionBarStyle">@style/Theme.TwitterCopy.ActionBar</item>
+    </style>
+
+    <style name="Theme.TwitterCopy.ActionBar" parent="@android:style/Widget.Holo.ActionBar">
+       <item name="android:background">#55acee</item>
     </style>
 
 </resources>

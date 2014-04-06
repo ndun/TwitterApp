@@ -1,5 +1,6 @@
 package com.nfd.apps.twitterapp;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
@@ -28,12 +29,16 @@ public class ProfileActivity extends FragmentActivity {
 		TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
 		TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
 		ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
+		ImageView ivSmallProfilePic = (ImageView) findViewById(R.id.ivSmallProfPic);
+		ImageView ivBackgroundImage = (ImageView) findViewById(R.id.ivBackgroundImage);
 		
 		tvName.setText(user.getName());
 		tvTagline.setText(user.getTagline());
 		tvFollowers.setText(String.valueOf(user.getFollowersCount()) + " Followers");
 		tvFollowing.setText(String.valueOf(user.getFriendsCount()) + " Following");
 		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(), ivProfileImage);
+		ivSmallProfilePic.setBackgroundColor(Color.WHITE);
+		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(), ivSmallProfilePic);
 	}
 
 	@Override

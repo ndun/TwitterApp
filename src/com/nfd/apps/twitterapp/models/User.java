@@ -21,11 +21,13 @@ public class User implements Serializable {
 	
 	private String name;
 	private String profileImageUrl;
+	private String backgroundImageUrl;
 	private String screenName;
 	private String tagline;
 	private long id;
 	private long followersCount;
 	private long friendsCount;
+	private long totalTweets;
 	
 	public User() {
 		name = profileImageUrl = screenName = "";
@@ -41,6 +43,8 @@ public class User implements Serializable {
 			followersCount = json.getLong(FOLLOWERS_COUNT_KEY);
 			friendsCount = json.getLong(FRIENDS_COUNT_KEY);
 			tagline = json.getString(DESCRIPTION_KEY);
+			backgroundImageUrl = json.getString(PROFILE_BACKGROUND_IMG_URL_KEY);
+			totalTweets = json.getLong(NUM_TWEETS_KEY);
 		} catch(JSONException e) {
 			e.printStackTrace();
 			name = profileImageUrl = screenName = "";
@@ -72,7 +76,15 @@ public class User implements Serializable {
 		return profileImageUrl;
 	}
 	
+	public String getBackgroundImageUrl() {
+		return backgroundImageUrl;
+	}
+	
 	public String getScreenName() {
 		return screenName;
+	}
+	
+	public long getTotalTweets() {
+		return totalTweets;
 	}
 }

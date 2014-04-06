@@ -2,9 +2,6 @@ package com.nfd.apps.twitterapp.fragments;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,13 +12,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.nfd.apps.twitterapp.R;
-import com.nfd.apps.twitterapp.TwitterApp;
 import com.nfd.apps.twitterapp.activities.TweetDisplayActivity;
 import com.nfd.apps.twitterapp.adapters.TweetsAdapter;
-import com.nfd.apps.twitterapp.helpers.EndlessScrollListener;
 import com.nfd.apps.twitterapp.models.Tweet;
 
 import eu.erikw.PullToRefreshListView;
@@ -31,6 +24,7 @@ import eu.erikw.PullToRefreshListView.OnRefreshListener;
 // v4 works backwards compatibility
 public class TweetsListFragment extends Fragment {
 
+	public static final String TWEET_EXTRA = "tweet";
 	protected PullToRefreshListView lvTweets;
 	protected TweetsAdapter tweetsAdapter;
 	protected ArrayList<Tweet> tweets;
@@ -48,7 +42,7 @@ public class TweetsListFragment extends Fragment {
 		tweetsAdapter = new TweetsAdapter(getActivity(), tweets);
 		lvTweets.setAdapter(tweetsAdapter);
 		
-//		setListViewListeners();
+		setListViewListeners();
 	}
 
 	// Must be created for each fragment to inflate xml
@@ -61,6 +55,10 @@ public class TweetsListFragment extends Fragment {
 	
 	public TweetsAdapter getAdapter() {
 		return tweetsAdapter;
+	}
+	
+	public void onProfileClick(View v) {
+		Log.d("TEST - PROFILE PIC CLICK", "PROFILE PICK CLICK: " + v.getId());
 	}
 	
 	private void setListViewListeners() {
@@ -80,10 +78,10 @@ public class TweetsListFragment extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 				Log.d("TEST - Item Click Listener", "on item click: " + pos);
-				Intent i = new Intent();
-//				i.putExtra(TWEET_EXTRA, tweetsAdapter.getItem(pos));
+				Intent i = new Intent(getActivity().getBaseContext(), TweetDisplayActivity.class);
+				i.putExtra(TWEET_EXTRA, tweetsAdapter.getItem(pos));
 //				i.setClass(getBaseContext(), TweetDisplayActivity.class);
-//				startActivity(i);
+				startActivity(i);
 			}
 		});
 	}

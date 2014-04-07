@@ -14,14 +14,29 @@ import android.util.Log;
 
 public class UserTimelineFragment extends TweetsListFragment {
 
+	public static String USER_ID_ARG_KEY = "userId";
+	
+	public static UserTimelineFragment newInstance(long userId) {
+		UserTimelineFragment fragment = new UserTimelineFragment();
+		Bundle args = new Bundle();
+		args.putLong(USER_ID_ARG_KEY, userId);		
+		fragment.setArguments(args);
+		return fragment;
+	}
+	
+	public long getUserId() {
+		return getArguments().getLong(USER_ID_ARG_KEY);
+	}
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		fetchTimelineAsync(new RequestParams());
+		RequestParams parms = new RequestParams();
+		parms.put("user_id", String.valueOf(getUserId()));
+		shouldClearTweets = true;
+		fetchTimelineAsync(parms);
 	}
-	
-
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -42,6 +57,7 @@ public class UserTimelineFragment extends TweetsListFragment {
 				shouldClearTweets = false;
 				
 				RequestParams parms = new RequestParams();
+				parms.put("user_id", String.valueOf(getUserId()));
 				parms.put("max_id", String.valueOf(lastId));
 				fetchTimelineAsync(parms);
 			}

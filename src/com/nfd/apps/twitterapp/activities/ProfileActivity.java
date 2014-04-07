@@ -16,12 +16,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nfd.apps.twitterapp.R;
 import com.nfd.apps.twitterapp.TwitterApp;
+import com.nfd.apps.twitterapp.fragments.UserTimelineFragment;
 import com.nfd.apps.twitterapp.models.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -42,6 +45,14 @@ public class ProfileActivity extends FragmentActivity {
 		getActionBar().setTitle("@" + user.getScreenName());
 		populateProfileHeader();
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+//		UserTimelineFragment fragment =  (UserTimelineFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentUserTimeline);
+//		fragment = UserTimelineFragment.newInstance(user.getId());
+		FragmentManager manager = getSupportFragmentManager();
+		FragmentTransaction fts = manager.beginTransaction();
+		
+		fts.replace(R.id.frUserTimeline, UserTimelineFragment.newInstance(user.getId()));
+		fts.commit();
+
 	}
 	
 	private void populateProfileHeader() {

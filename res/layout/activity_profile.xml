@@ -121,13 +121,22 @@
             android:text="5 Following" />
     </LinearLayout>
 
-    <fragment
+    <FrameLayout
+        android:id="@+id/frUserTimeline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/llCounts" >
+
+    </FrameLayout>
+    <!--fragment
         android:id="@+id/fragmentUserTimeline"
         android:name="com.nfd.apps.twitterapp.fragments.UserTimelineFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/llCounts" />
+        android:layout_below="@+id/llCounts" /-->
 
 </RelativeLayout>

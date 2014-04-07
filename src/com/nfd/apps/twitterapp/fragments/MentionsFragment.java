@@ -25,7 +25,7 @@ public class MentionsFragment extends TweetsListFragment {
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
-						Log.d("TEST", jsonTweets.toString());
+//						Log.d("TEST", jsonTweets.toString());
 						tweets = Tweet.fromJson(jsonTweets);
 						if(shouldClearTweets) {
 							tweetsAdapter.clear();

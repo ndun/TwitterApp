@@ -33,7 +33,7 @@ public class TweetsListFragment extends Fragment {
 	// called when fragment is being created and activity exists
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
+
 		super.onActivityCreated(savedInstanceState);
 		// can call getActivity to access methods in the activity
 		
@@ -66,21 +66,16 @@ public class TweetsListFragment extends Fragment {
             @Override
             public void onRefresh() {
             	shouldClearTweets = true;
-//                fetchTimelineAsync(new RequestParams());
                 lvTweets.onRefreshComplete();
             }
         });
-		
 
-	
 		lvTweets.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
 				Log.d("TEST - Item Click Listener", "on item click: " + pos);
 				Intent i = new Intent(getActivity().getBaseContext(), TweetDisplayActivity.class);
 				i.putExtra(TWEET_EXTRA, tweetsAdapter.getItem(pos));
-//				i.setClass(getBaseContext(), TweetDisplayActivity.class);
 				startActivity(i);
 			}
 		});

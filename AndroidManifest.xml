@@ -45,23 +45,24 @@
         </activity>
         <activity
             android:name="com.nfd.apps.twitterapp.activities.TimelineActivity"
-            android:label="@string/title_activity_timeline" 
-            android:theme="@style/Theme.TwitterCopy">
+            android:label="@string/title_activity_timeline"
+            android:theme="@style/Theme.TwitterCopy" >
         </activity>
         <activity
             android:name="com.nfd.apps.twitterapp.activities.ComposeActivity"
-            android:label="@string/title_activity_compose" 
-                        android:theme="@style/Theme.TwitterCopy">
+            android:label="@string/title_activity_compose"
+            android:theme="@style/Theme.TwitterCopy" >
         </activity>
         <activity
             android:name="com.nfd.apps.twitterapp.activities.TweetDisplayActivity"
-            android:label="@string/title_activity_tweet_display" 
-                        android:theme="@style/Theme.TwitterCopy">
+            android:label="@string/title_activity_tweet_display"
+            android:theme="@style/Theme.TwitterCopy" >
         </activity>
         <activity
-            android:name="com.nfd.apps.twitterapp.ProfileActivity"
-            android:label="@string/title_activity_profile" 
-                        android:theme="@style/Theme.TwitterCopy">
+            android:name="com.nfd.apps.twitterapp.activities.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:parentActivityName="com.nfd.apps.twitterapp.activities.TimelineActivity"
+            android:theme="@style/Theme.TwitterCopy" >
         </activity>
     </application>
 

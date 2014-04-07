@@ -13,8 +13,8 @@ import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.nfd.apps.twitterapp.ProfileActivity;
 import com.nfd.apps.twitterapp.R;
+import com.nfd.apps.twitterapp.TwitterApp;
 import com.nfd.apps.twitterapp.adapters.TweetsAdapter;
 import com.nfd.apps.twitterapp.fragments.HomeTimelineFragment;
 import com.nfd.apps.twitterapp.fragments.MentionsFragment;
@@ -37,17 +37,11 @@ public class TimelineActivity extends FragmentActivity implements TabListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
 		setupNavigationTabs();
-//		TweetsListFragment fragmentTweets = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentTweets);
-
-
-
-//		fetchTimelineAsync(new RequestParams());
-//		setListViewListeners();
-		
 	}
 	
 	public void onProfileView(MenuItem mi) {
 		Intent i = new Intent(this, ProfileActivity.class);
+		i.putExtra(ProfileActivity.USER_EXTRA, TwitterApp.getUser());
 		startActivity(i);
 	}
 

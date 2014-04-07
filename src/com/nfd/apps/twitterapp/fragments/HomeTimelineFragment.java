@@ -36,7 +36,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
 					return;
 				}
 				Tweet aTweet = tweetsAdapter.getItem(tweetsAdapter.getCount()-1);
-				Log.d("TEST - last tweet", "last Tweet: " + aTweet.getBody() + " - count: " + tweetsAdapter.getCount() + " id: " + aTweet.getId());
+//				Log.d("TEST - last tweet", "last Tweet: " + aTweet.getBody() + " - count: " + tweetsAdapter.getCount() + " id: " + aTweet.getId());
 				long lastId = aTweet.getId();
 				lastId = lastId - 1;
 				shouldClearTweets = false;
@@ -58,7 +58,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
 				new JsonHttpResponseHandler() {
 					@Override
 					public void onSuccess(JSONArray jsonTweets) {
-						Log.d("TEST", jsonTweets.toString());
+//						Log.d("TEST", jsonTweets.toString());
 						tweets = Tweet.fromJson(jsonTweets);
 						if(shouldClearTweets) {
 							tweetsAdapter.clear();

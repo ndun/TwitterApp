@@ -4,23 +4,29 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
+import android.sax.StartElementListener;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nfd.apps.twitterapp.R;
+import com.nfd.apps.twitterapp.activities.ProfileActivity;
 import com.nfd.apps.twitterapp.models.Tweet;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class TweetsAdapter extends ArrayAdapter<Tweet> {
 
+	private Tweet tweet;
 	public TweetsAdapter(Context context, List<Tweet> tweets) {
 		super(context, 0, tweets);
+		
 	}
 	
 	@Override
@@ -31,9 +37,10 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 			view = inflater.inflate(R.layout.tweet_item, null);
 		}
 		
-		Tweet tweet = getItem(position);
+		tweet = getItem(position);
 		
 		ImageView imageView = (ImageView) view.findViewById(R.id.ivProfile);
+		imageView.setOnClickListener(new ImageViewClickListener(position));
 		ImageLoader.getInstance().displayImage(tweet.getUser().getProfileImageUrl(), imageView);
 		
 		TextView nameView = (TextView) view.findViewById(R.id.tvName);
@@ -50,5 +57,18 @@ public class TweetsAdapter extends ArrayAdapter<Tweet> {
 		
 		return view;
 	}
+	
+	class ImageViewClickListener implements OnClickListener {
+		int position;
+		public ImageViewClickListener(int pos) {
+			this.position = pos;
+		}
 
+		public void onClick(View v) {
+			Intent i = new Intent(v.getContext(), ProfileActivity.class);
+			
+			i.putExtra(ProfileActivity.USER_EXTRA, getItem(position).getUser());
+			v.getContext().startActivity(i);
+		}
+	}
 }

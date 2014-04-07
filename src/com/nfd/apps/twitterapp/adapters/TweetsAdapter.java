@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.Intent;
-import android.sax.StartElementListener;
 import android.text.Html;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;

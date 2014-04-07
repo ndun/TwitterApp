@@ -83,8 +83,8 @@
             android:layout_alignLeft="@+id/tvName"
             android:layout_below="@+id/tvName"
             android:text="Tagline"
-            android:textSize="12sp" /
-        -->
+            android:textSize="12sp" / -->
+        
     </RelativeLayout>
 
     <LinearLayout

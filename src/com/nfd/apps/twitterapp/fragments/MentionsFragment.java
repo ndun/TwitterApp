@@ -19,6 +19,15 @@ public class MentionsFragment extends TweetsListFragment {
 		getMentions(new RequestParams());
 	}
 	
+	public static MentionsFragment newInstance() {
+		MentionsFragment fragmentFirst = new MentionsFragment();
+//		Bundle args = new Bundle();
+//		args.putInt("someInt", page);
+//		args.putString("someTitle", title);
+//		fragmentFirst.setArguments(args);
+		return fragmentFirst;
+	}
+	
 	public void getMentions(RequestParams parms) {
 		parms.put("count", "25");
 		TwitterApp.getRestClient().getMentions(

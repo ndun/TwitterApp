@@ -14,18 +14,25 @@ import android.util.Log;
 
 public class HomeTimelineFragment extends TweetsListFragment {
 
+	// newInstance constructor for creating fragment with arguments
+		public static HomeTimelineFragment newInstance() {
+			HomeTimelineFragment fragmentFirst = new HomeTimelineFragment();
+//			Bundle args = new Bundle();
+//			args.putInt("someInt", page);
+//			args.putString("someTitle", title);
+//			fragmentFirst.setArguments(args);
+			return fragmentFirst;
+		}
+
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		fetchTimelineAsync(new RequestParams());
 	}
 	
-
-	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		
 		lvTweets.setOnScrollListener(new EndlessScrollListener() {	
@@ -36,7 +43,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
 					return;
 				}
 				Tweet aTweet = tweetsAdapter.getItem(tweetsAdapter.getCount()-1);
-//				Log.d("TEST - last tweet", "last Tweet: " + aTweet.getBody() + " - count: " + tweetsAdapter.getCount() + " id: " + aTweet.getId());
+				Log.d("TEST - last tweet", "last Tweet: " + aTweet.getBody() + " - count: " + tweetsAdapter.getCount() + " id: " + aTweet.getId());
 				long lastId = aTweet.getId();
 				lastId = lastId - 1;
 				shouldClearTweets = false;
@@ -47,8 +54,6 @@ public class HomeTimelineFragment extends TweetsListFragment {
 			}
 		});
 	}
-
-
 
 	public void fetchTimelineAsync(RequestParams parms) {
 //		RequestParams parms = new RequestParams();
@@ -68,14 +73,9 @@ public class HomeTimelineFragment extends TweetsListFragment {
 
 					@Override
 					public void onFailure(Throwable arg0, JSONObject arg1) {
-						// TODO Auto-generated method stub
 						Log.d("test - failure", arg0.toString());
 //						super.onFailure(arg0, arg1);
 					}
-					
-					
 				}, parms);
 	}
-
-
 }

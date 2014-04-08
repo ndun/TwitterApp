@@ -20,21 +20,11 @@ import com.nfd.apps.twitterapp.models.Tweet;
 public class HomeTimelineFragment extends TweetsListFragment {
 	public static final String TWEET_ARG_KEY = "newTweet";
 	
-	// newInstance constructor for creating fragment with arguments
-	public static HomeTimelineFragment newInstance(Tweet newTweet) {
-		HomeTimelineFragment fragment = new HomeTimelineFragment();
-		Bundle args = new Bundle();
-		args.putSerializable(TWEET_ARG_KEY, newTweet);		
-		fragment.setArguments(args);
-		return fragment;
-	}
-	
 	public static HomeTimelineFragment newInstance() {
 		HomeTimelineFragment fragment = new HomeTimelineFragment();
 		return fragment;
 	}
 
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent,
 			Bundle savedInstanceState) {

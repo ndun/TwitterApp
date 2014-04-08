@@ -87,7 +87,6 @@ public class TimelineActivity extends ActionBarActivity {
 		MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.timeline, menu);
 	    return true;
-//		return super.onCreateOptionsMenu(menu);
 	}
 	
 	@Override

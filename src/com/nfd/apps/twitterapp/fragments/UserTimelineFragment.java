@@ -28,21 +28,26 @@ public class UserTimelineFragment extends TweetsListFragment {
 		return getArguments().getLong(USER_ID_ARG_KEY);
 	}
 	
+	public RequestParams getRequestParams() {
+		RequestParams parms = new RequestParams();
+		parms.put("user_id", String.valueOf(getUserId()));
+		return parms;
+	}
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		RequestParams parms = new RequestParams();
+		
 		parms.put("user_id", String.valueOf(getUserId()));
 		shouldClearTweets = true;
-		fetchTimelineAsync(parms);
+		fetchTweets(parms);
 	}
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		
+/*		
 		lvTweets.setOnScrollListener(new EndlessScrollListener() {	
 			@Override
 			public void onLoadMore(int page, int totalItemsCount) {
@@ -62,13 +67,12 @@ public class UserTimelineFragment extends TweetsListFragment {
 				fetchTimelineAsync(parms);
 			}
 		});
+		*/
 	}
 
 
-	private void fetchTimelineAsync(RequestParams parms) {
-//		RequestParams parms = new RequestParams();
-		parms.put("count", "25");
-		
+	public void fetchTweets(RequestParams parms) {
+		parms.put("count", "25");		
 		TwitterApp.getRestClient().getUserTimeline(
 				new JsonHttpResponseHandler() {
 					@Override

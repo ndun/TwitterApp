@@ -16,19 +16,16 @@ public class MentionsFragment extends TweetsListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getMentions(new RequestParams());
+		shouldClearTweets = true;
+		fetchTweets(new RequestParams());
 	}
 	
 	public static MentionsFragment newInstance() {
 		MentionsFragment fragmentFirst = new MentionsFragment();
-//		Bundle args = new Bundle();
-//		args.putInt("someInt", page);
-//		args.putString("someTitle", title);
-//		fragmentFirst.setArguments(args);
 		return fragmentFirst;
 	}
 	
-	public void getMentions(RequestParams parms) {
+	public void fetchTweets(RequestParams parms) {
 		parms.put("count", "25");
 		TwitterApp.getRestClient().getMentions(
 				new JsonHttpResponseHandler() {
@@ -47,6 +44,11 @@ public class MentionsFragment extends TweetsListFragment {
 						Log.d("test - failure", arg0.toString());
 					}
 				}, parms);
+	}
+
+	@Override
+	public RequestParams getRequestParams() {
+		return new RequestParams();
 	}
 	
 }

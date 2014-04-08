@@ -12,9 +12,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
+import com.loopj.android.http.RequestParams;
 import com.nfd.apps.twitterapp.R;
 import com.nfd.apps.twitterapp.activities.TweetDisplayActivity;
 import com.nfd.apps.twitterapp.adapters.TweetsAdapter;
+import com.nfd.apps.twitterapp.helpers.EndlessScrollListener;
 import com.nfd.apps.twitterapp.models.Tweet;
 
 import eu.erikw.PullToRefreshListView;
@@ -22,7 +24,7 @@ import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
 
 // v4 works backwards compatibility
-public class TweetsListFragment extends Fragment {
+public abstract class TweetsListFragment extends Fragment {
 
 	public static final String TWEET_EXTRA = "tweet";
 	protected PullToRefreshListView lvTweets;
@@ -30,6 +32,8 @@ public class TweetsListFragment extends Fragment {
 	protected ArrayList<Tweet> tweets;
 	protected boolean shouldClearTweets = true;
 	
+	public abstract void fetchTweets(RequestParams parms);
+		
 	// called when fragment is being created and activity exists
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
@@ -61,6 +65,8 @@ public class TweetsListFragment extends Fragment {
 		Log.d("TEST - PROFILE PIC CLICK", "PROFILE PICK CLICK: " + v.getId());
 	}
 	
+	public abstract RequestParams getRequestParams();
+	
 	private void setListViewListeners() {
 		lvTweets.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -77,6 +83,25 @@ public class TweetsListFragment extends Fragment {
 				Intent i = new Intent(getActivity().getBaseContext(), TweetDisplayActivity.class);
 				i.putExtra(TWEET_EXTRA, tweetsAdapter.getItem(pos));
 				startActivity(i);
+			}
+		});
+		
+		lvTweets.setOnScrollListener(new EndlessScrollListener() {	
+			@Override
+			public void onLoadMore(int page, int totalItemsCount) {
+
+				if(tweetsAdapter.getCount() == 0) {
+					return;
+				}
+				Tweet aTweet = tweetsAdapter.getItem(tweetsAdapter.getCount()-1);
+				Log.d("TEST - last tweet", "last Tweet: " + aTweet.getBody() + " - count: " + tweetsAdapter.getCount() + " id: " + aTweet.getId());
+				long lastId = aTweet.getId();
+				lastId = lastId - 1;
+				shouldClearTweets = false;
+				
+				RequestParams parms = getRequestParams();
+				parms.put("max_id", String.valueOf(lastId));
+				fetchTweets(parms);
 			}
 		});
 	}

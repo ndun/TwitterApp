@@ -33,39 +33,35 @@ public abstract class TweetsListFragment extends Fragment {
 	protected boolean shouldClearTweets = true;
 	
 	public abstract void fetchTweets(RequestParams parms);
-		
+	public abstract RequestParams getRequestParams();
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		tweets = new ArrayList<Tweet>();
+		tweetsAdapter = new TweetsAdapter(getActivity(), tweets);
+	}
 	// called when fragment is being created and activity exists
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 
 		super.onActivityCreated(savedInstanceState);
 		// can call getActivity to access methods in the activity
-		
-		tweets = new ArrayList<Tweet>();
-		lvTweets = (PullToRefreshListView) getActivity().findViewById(R.id.lvTweets);
-		tweetsAdapter = new TweetsAdapter(getActivity(), tweets);
-		lvTweets.setAdapter(tweetsAdapter);
-		
-		setListViewListeners();
 	}
 
 	// Must be created for each fragment to inflate xml
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		return inflater.inflate(R.layout.fragment_tweets_list, parent, false);
+		View view = inflater.inflate(R.layout.fragment_tweets_list, parent, false);
+		lvTweets = (PullToRefreshListView) view.findViewById(R.id.lvTweets);
+		lvTweets.setAdapter(tweetsAdapter);
+		setListViewListeners();
+		return view;
 	}
-
 	
 	public TweetsAdapter getAdapter() {
 		return tweetsAdapter;
 	}
-	
-	public void onProfileClick(View v) {
-		Log.d("TEST - PROFILE PIC CLICK", "PROFILE PICK CLICK: " + v.getId());
-	}
-	
-	public abstract RequestParams getRequestParams();
 	
 	private void setListViewListeners() {
 		lvTweets.setOnRefreshListener(new OnRefreshListener() {
@@ -105,6 +101,4 @@ public abstract class TweetsListFragment extends Fragment {
 			}
 		});
 	}
-	
-	
 }

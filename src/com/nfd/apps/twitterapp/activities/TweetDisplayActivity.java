@@ -37,9 +37,11 @@ public class TweetDisplayActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tweet_display);
 		setupViews();
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		Intent i = getIntent();
 		tweet = (Tweet) i.getSerializableExtra(TimelineActivity.TWEET_EXTRA);
 //		Toast.makeText(this, aTweet.getBody(), Toast.LENGTH_LONG).show();
+		
 		loadData();
 		fetchTweetStatus();
 	}

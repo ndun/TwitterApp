@@ -45,14 +45,11 @@ public class ProfileActivity extends FragmentActivity {
 		getActionBar().setTitle("@" + user.getScreenName());
 		populateProfileHeader();
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-//		UserTimelineFragment fragment =  (UserTimelineFragment) getSupportFragmentManager().findFragmentById(R.id.fragmentUserTimeline);
-//		fragment = UserTimelineFragment.newInstance(user.getId());
 		FragmentManager manager = getSupportFragmentManager();
 		FragmentTransaction fts = manager.beginTransaction();
 		
 		fts.replace(R.id.frUserTimeline, UserTimelineFragment.newInstance(user.getId()));
 		fts.commit();
-
 	}
 	
 	private void populateProfileHeader() {
@@ -60,6 +57,7 @@ public class ProfileActivity extends FragmentActivity {
 		TextView tvTagline = (TextView) findViewById(R.id.tvTagline);
 		TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
 		TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
+		TextView tvTotalTweets = (TextView) findViewById(R.id.tvTweets);
 //		ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
 		ImageView ivSmallProfilePic = (ImageView) findViewById(R.id.ivSmallProfPic);
 		ivBackgroundImage = (ImageView) findViewById(R.id.ivBackgroundImage);
@@ -68,6 +66,7 @@ public class ProfileActivity extends FragmentActivity {
 		tvTagline.setText(user.getTagline());
 		tvFollowers.setText(String.valueOf(user.getFollowersCount()) + " Followers");
 		tvFollowing.setText(String.valueOf(user.getFriendsCount()) + " Following");
+		tvTotalTweets.setText(String.valueOf(user.getTotalTweets() + " Tweets"));
 //		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(), ivProfileImage);
 		ivSmallProfilePic.setBackgroundColor(Color.WHITE);
 		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(), ivSmallProfilePic);

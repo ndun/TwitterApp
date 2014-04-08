@@ -65,7 +65,7 @@ public class UserTimelineFragment extends TweetsListFragment {
 					@Override
 					public void onFailure(Throwable arg0, JSONObject arg1) {
 						Log.d("test - failure", arg0.toString());
-//						super.onFailure(arg0, arg1);
+
 					}
 				}, parms);
 	}

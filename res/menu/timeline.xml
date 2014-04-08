@@ -1,18 +1,16 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:myapp="http://schemas.android.com/apk/res-auto" >
 
     <item
-        android:id="@+id/miSettings"
+        android:id="@+id/miCompose"
         android:icon="@drawable/ic_compose"
-        android:onClick="onComposePress"
-        android:showAsAction="always"
-        android:title="@string/compose_tweet_title"/>
+        android:title="@string/compose_tweet_title"
+        myapp:showAsAction="ifRoom"/>
 
-        <item
+    <item
         android:id="@+id/miProfile"
         android:icon="@drawable/ic_profile"
-        android:onClick="onProfileView"
-        android:showAsAction="always"
-        android:title="Prole"/>
-    
-    
+        android:title="Profile"
+        myapp:showAsAction="ifRoom"/>
+
 </menu>

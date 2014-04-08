@@ -68,6 +68,7 @@ public abstract class TweetsListFragment extends Fragment {
             @Override
             public void onRefresh() {
             	shouldClearTweets = true;
+            	fetchTweets(getRequestParams());
                 lvTweets.onRefreshComplete();
             }
         });

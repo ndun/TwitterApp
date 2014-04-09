@@ -26,36 +26,21 @@
                 android:background="@android:drawable/screen_background_dark"
                 android:scaleType="centerCrop" />
 
-            <ImageView
-                android:id="@+id/ivSmallProfPic"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
-                android:paddingBottom="2dp"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
-                android:paddingTop="2dp"
-                android:src="@android:drawable/screen_background_light_transparent" />
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vpProfilePager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+            </android.support.v4.view.ViewPager>
 
-            <TextView
-                android:id="@+id/tvName"
+            <FrameLayout
+                android:id="@+id/frProfileData"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ivSmallProfPic"
-                android:layout_centerHorizontal="true"
-                android:text="Name"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tvTagline"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvName"
-                android:layout_centerHorizontal="true"
-                android:text="Tagline"
-                android:textColor="#FFFFFF"
-                android:textSize="12sp" />
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true" >
+            </FrameLayout>
         </RelativeLayout>
 
         <!--
@@ -83,8 +68,8 @@
             android:layout_alignLeft="@+id/tvName"
             android:layout_below="@+id/tvName"
             android:text="Tagline"
-            android:textSize="12sp" / -->
-        
+            android:textSize="12sp" / > -->
+
     </RelativeLayout>
 
     <LinearLayout
@@ -108,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-                        android:layout_weight="1"
+            android:layout_weight="1"
             android:text="5 Followers" />
 
         <TextView
@@ -116,8 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
-                        android:layout_weight="1"
-
+            android:layout_weight="1"
             android:text="5 Following" />
     </LinearLayout>
 
@@ -128,15 +112,15 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/llCounts" >
-
     </FrameLayout>
-    <!--fragment
+    <!--
+        fragment
         android:id="@+id/fragmentUserTimeline"
         android:name="com.nfd.apps.twitterapp.fragments.UserTimelineFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/llCounts" /-->
+        android:layout_below="@+id/llCounts" />-->
 
 </RelativeLayout>

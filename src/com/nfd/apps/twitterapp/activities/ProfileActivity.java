@@ -15,15 +15,23 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nfd.apps.twitterapp.R;
 import com.nfd.apps.twitterapp.TwitterApp;
+import com.nfd.apps.twitterapp.fragments.ProfileDataFragment;
+import com.nfd.apps.twitterapp.fragments.ProfileImageFragment;
 import com.nfd.apps.twitterapp.fragments.UserTimelineFragment;
 import com.nfd.apps.twitterapp.models.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -31,8 +39,10 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 public class ProfileActivity extends FragmentActivity {
 
 	public static final String USER_EXTRA = "user";
-	private User user;
+	protected User user;
 	private ImageView ivBackgroundImage ;
+	private FragmentPagerAdapter adapterViewPager;
+	private ViewPager vpPager ;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +52,7 @@ public class ProfileActivity extends FragmentActivity {
 		if(user == null) {
 			user = TwitterApp.getUser();
 		}
-		getActionBar().setTitle("@" + user.getScreenName());
+//		getActionBar().setTitle("@" + user.getScreenName());
 		populateProfileHeader();
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		FragmentManager manager = getSupportFragmentManager();
@@ -50,26 +60,54 @@ public class ProfileActivity extends FragmentActivity {
 		
 		fts.replace(R.id.frUserTimeline, UserTimelineFragment.newInstance(user.getId()));
 		fts.commit();
+		
+		vpPager = (ViewPager) findViewById(R.id.vpProfilePager);
+        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        vpPager.setAdapter(adapterViewPager);
+        vpPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+            // This method will be invoked when a new page becomes selected.
+            @Override
+            public void onPageSelected(int position) {
+//                getSupportActionBar().setSelectedNavigationItem(position);
+            }
+
+            // This method will be invoked when the current page is scrolled
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                // Code goes here
+            	Log.d("TEST", "onPageScrolled");
+            }
+
+            // Called when the scroll state changes: 
+            // SCROLL_STATE_IDLE, SCROLL_STATE_DRAGGING, SCROLL_STATE_SETTLING
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // Code goes here
+            	Log.d("TEST", "state changed");
+            }
+        });
+
 	}
 	
 	private void populateProfileHeader() {
-		TextView tvName = (TextView) findViewById(R.id.tvName);
-		TextView tvTagline = (TextView) findViewById(R.id.tvTagline);
+//		TextView tvName = (TextView) findViewById(R.id.tvName);
+//		TextView tvTagline = (TextView) findViewById(R.id.tvTagline);
 		TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
 		TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
 		TextView tvTotalTweets = (TextView) findViewById(R.id.tvTweets);
 //		ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
-		ImageView ivSmallProfilePic = (ImageView) findViewById(R.id.ivSmallProfPic);
+//		ImageView ivSmallProfilePic = (ImageView) findViewById(R.id.ivSmallProfPic);
 		ivBackgroundImage = (ImageView) findViewById(R.id.ivBackgroundImage);
 		
-		tvName.setText(user.getName());
-		tvTagline.setText(user.getTagline());
+//		tvName.setText(user.getName());
+//		tvTagline.setText(user.getTagline());
 		tvFollowers.setText(String.valueOf(user.getFollowersCount()) + " Followers");
 		tvFollowing.setText(String.valueOf(user.getFriendsCount()) + " Following");
 		tvTotalTweets.setText(String.valueOf(user.getTotalTweets() + " Tweets"));
 //		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(), ivProfileImage);
-		ivSmallProfilePic.setBackgroundColor(Color.WHITE);
-		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(), ivSmallProfilePic);
+//		ivSmallProfilePic.setBackgroundColor(Color.WHITE);
+//		ImageLoader.getInstance().displayImage(user.getProfileImageUrl(), ivSmallProfilePic);
 		
 		if(user.getBackgroundImageUrl() != null && user.getBackgroundImageUrl() != " ") {
 			new RetrieveBitMapTask().execute(user.getBackgroundImageUrl());
@@ -107,4 +145,31 @@ public class ProfileActivity extends FragmentActivity {
 		}
 	}
 	
+	
+	public class MyPagerAdapter extends FragmentPagerAdapter {
+		private int NUM_ITEMS = 2;
+
+	    public MyPagerAdapter(FragmentManager fragmentManager) {
+	    	super(fragmentManager);
+	    }
+
+	    // Returns total number of pages
+	    @Override
+	    public int getCount() {
+	    	return NUM_ITEMS;
+	    }
+
+	    // Returns the fragment to display for that page
+	    @Override
+	    public Fragment getItem(int position) {
+	    	switch (position) {
+	            case 0: // Fragment # 0 - This will show FirstFragment
+	                return ProfileImageFragment.newInstance(user);
+	            case 1: // Fragment # 0 - This will show FirstFragment different title
+	                return ProfileDataFragment.newInstance(user);
+	            default:
+	                return null;
+	    	}
+	    }
+	}
 }

@@ -52,15 +52,11 @@ public class ComposeActivity extends Activity {
 			
 			@Override
 			public void onTextChanged(CharSequence str, int start, int before, int count) {
-				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
 			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
 					int arg3) {
-				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
@@ -82,29 +78,7 @@ public class ComposeActivity extends Activity {
 		String formattedName = "<b>" + user.getName() + "</b> <small><font color='#777777'>@"
 				+ user.getScreenName() + "</font></small>";
 		tvUserName.setText(Html.fromHtml(formattedName));
-//		TwitterApp.getRestClient().getUser(new JsonHttpResponseHandler() {
-/*
-			@Override
-			public void onSuccess(JSONObject json) {
-				Log.d("test - get user", json.toString());
-				User user = new User(json);
-				ImageLoader.getInstance().displayImage(
-						user.getProfileImageUrl(), ivProfilePic);
-				String formattedName = "<b>" + user.getName()
-						+ "</b> <small><font color='#777777'>@"
-						+ user.getScreenName() + "</font></small>";
-				tvUserName.setText(Html.fromHtml(formattedName));
 
-			}
-
-			@Override
-			public void onFailure(Throwable arg0, JSONObject arg1) {
-				arg0.printStackTrace();
-				Log.d("test - fail user", arg1.toString());
-			}
-
-		});
-		*/
 	}
 
 	@Override

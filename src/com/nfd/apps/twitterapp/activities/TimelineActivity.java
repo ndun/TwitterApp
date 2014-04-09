@@ -147,8 +147,7 @@ public class TimelineActivity extends ActionBarActivity {
 
 			if (manager.findFragmentById(R.id.frame_container) instanceof HomeTimelineFragment) {
 				HomeTimelineFragment fragment = (HomeTimelineFragment) manager.findFragmentById(R.id.frame_container);
-				fragment.getAdapter().insert(newTweet, 0);
-				
+				fragment.getAdapter().insert(newTweet, 0);				
 			}
 
 			fts.commit();

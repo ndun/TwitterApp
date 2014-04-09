@@ -30,6 +30,14 @@
                 android:id="@+id/vpProfilePager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
+
+                <android.support.v4.view.PagerTabStrip
+                    android:id="@+id/ptsTabStrip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:paddingBottom="4dp"                    
+                    android:paddingTop="4dp" />
             </android.support.v4.view.ViewPager>
 
             <FrameLayout
@@ -68,7 +76,8 @@
             android:layout_alignLeft="@+id/tvName"
             android:layout_below="@+id/tvName"
             android:text="Tagline"
-            android:textSize="12sp" / > -->
+            android:textSize="12sp" / >
+        -->
 
     </RelativeLayout>
 
@@ -121,6 +130,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/llCounts" />-->
+        android:layout_below="@+id/llCounts" />
+    -->
 
 </RelativeLayout>

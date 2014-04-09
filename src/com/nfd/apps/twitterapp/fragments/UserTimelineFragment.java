@@ -35,8 +35,7 @@ public class UserTimelineFragment extends TweetsListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		RequestParams parms = new RequestParams();
-		
+		RequestParams parms = new RequestParams();		
 		parms.put("user_id", String.valueOf(getUserId()));
 		shouldClearTweets = true;
 		fetchTweets(parms);
@@ -46,7 +45,6 @@ public class UserTimelineFragment extends TweetsListFragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 	}
-
 
 	public void fetchTweets(RequestParams parms) {
 		parms.put("count", "25");		
@@ -65,12 +63,7 @@ public class UserTimelineFragment extends TweetsListFragment {
 					@Override
 					public void onFailure(Throwable arg0, JSONObject arg1) {
 						Log.d("test - failure", arg0.toString());
-
 					}
 				}, parms);
 	}
-
-
-
-
 }

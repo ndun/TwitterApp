@@ -40,7 +40,6 @@ public class TweetDisplayActivity extends Activity {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		Intent i = getIntent();
 		tweet = (Tweet) i.getSerializableExtra(TimelineActivity.TWEET_EXTRA);
-//		Toast.makeText(this, aTweet.getBody(), Toast.LENGTH_LONG).show();
 		
 		loadData();
 		fetchTweetStatus();
@@ -73,12 +72,10 @@ public class TweetDisplayActivity extends Activity {
 	}
 	
 	private void fetchTweetStatus() {
-		//https%3A%2F%2Ftwitter.com%2F%23!%2Ftwitter%2Fstatus%2F99530515043983360
 		long id = tweet.getId();
 		String strId = String.valueOf(id);
 		RequestParams params = new RequestParams();
 		params.put("id", strId);
-	//	params.put("url", "https%3A%2F%2Ftwitter.com%2F%23!%2Ftwitter%2Fstatus%2F" + strId);
 		TwitterApp.getRestClient().getStatus(new JsonHttpResponseHandler() {
 
 			@Override
